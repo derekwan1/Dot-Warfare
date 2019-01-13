@@ -16,6 +16,7 @@ class GameManager {
     var previousLane: Int?
     var dotArray: [Dot] = []
     var gameStarted = false
+    var numDots = 0
     
     init(scene: GameScene) {
         self.scene = scene
@@ -27,8 +28,15 @@ class GameManager {
     }
     
     func generateDot() {
+        //This makes sure we don't hit the zPosition limit
+        if numDots == 100000 {
+            numDots = 0
+        }
         let dot = Dot(circleOfRadius: CGFloat(25))
+        numDots += 1
         dot.radius = 25
+        // This makes sure that dot explosions don't overlap
+        dot.zPosition = CGFloat(4 + (numDots * 3))
         var laneNumber = Int(CGFloat(arc4random_uniform(7)))
         if previousLane != nil {
             while previousLane == laneNumber {

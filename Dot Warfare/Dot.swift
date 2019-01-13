@@ -19,7 +19,6 @@ class Dot: SKShapeNode {
     
     func initialize(color: String, scene: GameScene) {
         self.gameScene = scene
-        self.zPosition = 4
         self.isHidden = false
         self.name = "red"
         if color == "red" {
@@ -48,7 +47,7 @@ class Dot: SKShapeNode {
         self.removeAllActions()
         dying = true
         splashDot = SKShapeNode(circleOfRadius: self.radius)
-        splashDot.zPosition = 2
+        splashDot.zPosition = self.zPosition - 2
         splashDot.name = "splash"
         splashDot.isHidden = false
         splashDot.position = self.position
@@ -59,7 +58,7 @@ class Dot: SKShapeNode {
         }
         
         whiteMask = SKShapeNode(circleOfRadius: self.radius)
-        whiteMask.zPosition = 3
+        whiteMask.zPosition = self.zPosition - 1
         whiteMask.name = "white splash"
         whiteMask.fillColor = SKColor.white
         whiteMask.isHidden = false

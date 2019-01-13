@@ -9,6 +9,9 @@
 import SpriteKit
 import GameplayKit
 
+//Something to consider in the future to make stuff run faster
+//let texture = SKView().texture(from: desiredNode)
+//let newSprite = SKSpriteNode(texture: texture)
 class GameScene: SKScene {
     
     //1
@@ -17,6 +20,7 @@ class GameScene: SKScene {
     var playButton: SKShapeNode!
     var pauseButtonA: SKShapeNode!
     var pauseButtonB: SKShapeNode!
+    var pauseBtn: SKShapeNode!
     var playButton2: SKShapeNode!
     var game: GameManager!
     
@@ -24,6 +28,7 @@ class GameScene: SKScene {
     var paused_status: SKLabelNode!
     var playerPositions: [(Int, Int)] = []
     var gameBG: SKShapeNode!
+    var pauseBG: SKShapeNode!
     
     var scorePos: CGPoint?
     var is_paused: Bool!
@@ -104,10 +109,10 @@ class GameScene: SKScene {
         pauseButtonA.zPosition = 1
         pauseButtonA.position = CGPoint(x: 0, y: (frame.size.height / -2) + 200)
         pauseButtonA.fillColor = SKColor.black
-        let topRight = CGPoint(x: (frame.size.width / -2) + 95, y: frame.size.height - 220)
-        let bottomRight = CGPoint(x: (frame.size.width / -2) + 95, y: frame.size.height - 260)
-        let topLeft = CGPoint(x: (frame.size.width / -2) + 105, y: frame.size.height - 220)
-        let bottomLeft = CGPoint(x: (frame.size.width / -2) + 105, y: frame.size.height - 260)
+        let topRight = CGPoint(x: (frame.size.width / -2) + 96, y: frame.size.height - 230)
+        let bottomRight = CGPoint(x: (frame.size.width / -2) + 96, y: frame.size.height - 270)
+        let topLeft = CGPoint(x: (frame.size.width / -2) + 106, y: frame.size.height - 230)
+        let bottomLeft = CGPoint(x: (frame.size.width / -2) + 106, y: frame.size.height - 270)
         let path1 = CGMutablePath()
         path1.addLine(to: topRight)
         path1.addLines(between: [topRight, bottomRight, bottomLeft, topLeft])
@@ -120,10 +125,10 @@ class GameScene: SKScene {
         pauseButtonB.zPosition = 1
         pauseButtonB.position = CGPoint(x: 0, y: (frame.size.height / -2) + 200)
         pauseButtonB.fillColor = SKColor.black
-        let topRight2 = CGPoint(x: (frame.size.width / -2) + 125, y: frame.size.height - 220)
-        let bottomRight2 = CGPoint(x: (frame.size.width / -2) + 125, y: frame.size.height - 260)
-        let topLeft2 = CGPoint(x: (frame.size.width / -2) + 115, y: frame.size.height - 220)
-        let bottomLeft2 = CGPoint(x: (frame.size.width / -2) + 115, y: frame.size.height - 260)
+        let topRight2 = CGPoint(x: (frame.size.width / -2) + 126, y: frame.size.height - 230)
+        let bottomRight2 = CGPoint(x: (frame.size.width / -2) + 126, y: frame.size.height - 270)
+        let topLeft2 = CGPoint(x: (frame.size.width / -2) + 116, y: frame.size.height - 230)
+        let bottomLeft2 = CGPoint(x: (frame.size.width / -2) + 116, y: frame.size.height - 270)
         let path2 = CGMutablePath()
         path2.addLine(to: topRight2)
         path2.addLines(between: [topRight2, bottomRight2, bottomLeft2, topLeft2])
@@ -136,15 +141,24 @@ class GameScene: SKScene {
         playButton2.zPosition = 1
         playButton2.position = CGPoint(x: 0, y: (frame.size.height / -2) + 200)
         playButton2.fillColor = SKColor.black
-        let play_top = CGPoint(x: (frame.size.width / -2) + 100, y: frame.size.height - 220)
-        let play_bottom = CGPoint(x: (frame.size.width / -2) + 100, y: frame.size.height - 260)
-        let play_middle = CGPoint(x: (frame.size.width / -2) + 130, y: frame.size.height - 240)
+        let play_top = CGPoint(x: (frame.size.width / -2) + 100, y: frame.size.height - 230)
+        let play_bottom = CGPoint(x: (frame.size.width / -2) + 100, y: frame.size.height - 270)
+        let play_middle = CGPoint(x: (frame.size.width / -2) + 130, y: frame.size.height - 250)
         let play_path = CGMutablePath()
         play_path.addLine(to: topCorner)
         play_path.addLines(between: [play_top, play_bottom, play_middle])
         playButton2.path = play_path
         playButton2.isHidden = true
         self.addChild(playButton2)
+        //Create rectangle behind pause button
+        let rect = CGRect(x: 0, y: 0, width: 80, height: 80)
+        pauseBtn = SKShapeNode(rect: rect, cornerRadius: 10)
+        pauseBtn.fillColor = SKColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        pauseBtn.position = CGPoint(x: (frame.size.width / -2) + 72.5, y: (frame.size.height / 2) - 90)
+        pauseBtn.zPosition = 6
+        pauseBtn.name = "pause_button"
+        pauseBtn.isHidden = true
+        self.addChild(pauseBtn)
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -161,7 +175,7 @@ class GameScene: SKScene {
                     startGame()
                 }
                 
-                if (node.name == "left_pause_button" || node.name == "right_pause_button") && !is_paused {
+                if (node.name == "pause_button" && !is_paused) {
                     is_paused = true
                     self.pauseButtonA.isHidden = true
                     self.pauseButtonB.isHidden = true
@@ -174,9 +188,17 @@ class GameScene: SKScene {
                             dot.splashDot.isPaused = true
                         }
                     }
-                }
-                
-                if node.name == "play_button2" && is_paused {
+                    let width = frame.size.width
+                    let height = frame.size.height
+                    let rect = CGRect(x: -width / 2, y: -height / 2, width: width, height: height)
+                    pauseBG = SKShapeNode(rect: rect, cornerRadius: 0.02)
+                    pauseBG.fillColor = SKColor(red: 0, green: 0, blue: 0, alpha: 0.2)
+                    pauseBG.isHidden = false
+                    self.addChild(pauseBG)
+                    pauseBG.position = CGPoint(x: 0, y: height)
+                    pauseBG.zPosition = 100001
+                    pauseBG.run(SKAction.move(to: CGPoint(x: 0, y: 0), duration: 0.3))
+                } else if node.name == "pause_button" && is_paused {
                     is_paused = false
                     self.pauseButtonA.isHidden = false
                     self.pauseButtonB.isHidden = false
@@ -188,6 +210,9 @@ class GameScene: SKScene {
                             dot.whiteMask.isPaused = false
                             dot.splashDot.isPaused = false
                         }
+                    }
+                    pauseBG.run(SKAction.move(to: CGPoint(x: 0, y: frame.size.height), duration: 0.3)) {
+                        self.pauseBG.isHidden = true
                     }
                 }
 
@@ -211,12 +236,16 @@ class GameScene: SKScene {
             self.playButton.isHidden = true
         }
         
-        pauseButtonA.run(SKAction.scale(to: 1, duration: 0.4)) {
+        pauseButtonA.run(SKAction.scale(to: 1, duration: 1)) {
             self.pauseButtonA.isHidden = false
         }
         
-        pauseButtonB.run(SKAction.scale(to: 1, duration: 0.4)) {
+        pauseButtonB.run(SKAction.scale(to: 1, duration: 1)) {
             self.pauseButtonB.isHidden = false
+        }
+        
+        pauseBtn.run(SKAction.scale(to: 1, duration: 1)) {
+            self.pauseBtn.isHidden = false
         }
         
         let bottomCorner = CGPoint(x: 0, y: (frame.size.height / -2) + 20)
