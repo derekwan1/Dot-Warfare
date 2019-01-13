@@ -15,6 +15,7 @@
 		210F98C021E8C39F002E72E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 210F98BF21E8C39F002E72E0 /* Assets.xcassets */; };
 		210F98C321E8C39F002E72E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 210F98C121E8C39F002E72E0 /* LaunchScreen.storyboard */; };
 		210F98CB21E8C3F8002E72E0 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210F98CA21E8C3F8002E72E0 /* GameManager.swift */; };
+		2135200821EB372100C6F299 /* redBomb.png in Resources */ = {isa = PBXBuildFile; fileRef = 2135200721EB372100C6F299 /* redBomb.png */; };
 		217BD6EB21E96A67001E15C2 /* Dot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217BD6EA21E96A67001E15C2 /* Dot.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,7 @@
 		210F98C221E8C39F002E72E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		210F98C421E8C39F002E72E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		210F98CA21E8C3F8002E72E0 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
+		2135200721EB372100C6F299 /* redBomb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = redBomb.png; path = Assets.xcassets/Images/redBomb.png; sourceTree = "<group>"; };
 		217BD6EA21E96A67001E15C2 /* Dot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dot.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -62,6 +64,7 @@
 		210F98B121E8C39B002E72E0 /* Dot Warfare */ = {
 			isa = PBXGroup;
 			children = (
+				2135200721EB372100C6F299 /* redBomb.png */,
 				210F98B221E8C39B002E72E0 /* AppDelegate.swift */,
 				210F98B421E8C39B002E72E0 /* GameScene.sks */,
 				210F98B821E8C39B002E72E0 /* GameScene.swift */,
@@ -137,6 +140,7 @@
 				210F98BE21E8C39B002E72E0 /* Main.storyboard in Resources */,
 				210F98B521E8C39B002E72E0 /* GameScene.sks in Resources */,
 				210F98C021E8C39F002E72E0 /* Assets.xcassets in Resources */,
+				2135200821EB372100C6F299 /* redBomb.png in Resources */,
 				210F98C321E8C39F002E72E0 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -29,6 +29,7 @@ class GameScene: SKScene {
     var playerPositions: [(Int, Int)] = []
     var gameBG: SKShapeNode!
     var pauseBG: SKShapeNode!
+    var bomb: SKSpriteNode!
     
     var scorePos: CGPoint?
     var is_paused: Bool!
@@ -41,6 +42,14 @@ class GameScene: SKScene {
     }
     
     private func initializeGameView() {
+        //Make the bomb its own separate object
+        let image = UIImage(named: "redBomb")
+        let texture = SKTexture(image: image!)
+        bomb = SKSpriteNode(texture: texture)
+        bomb.zPosition = 200000
+        self.addChild(bomb)
+        bomb.run(SKAction.repeatForever(SKAction.rotate(byAngle: 2 * .pi, duration: 4)))
+        
         currentScore = SKLabelNode(fontNamed: "ArialRoundedMTBold")
         currentScore.zPosition = 1
         currentScore.position = CGPoint(x: 0, y: (frame.size.height / -2) + 60)
