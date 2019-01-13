@@ -5,6 +5,7 @@
 //  Created by Derek Wan on 1/12/19.
 //  Copyright © 2019 Derek Wan. All rights reserved.
 //
+//TODO: Need to add more colored dots as well as color-specific movements/deaths.
 
 import SpriteKit
 
@@ -24,7 +25,9 @@ class Dot: SKShapeNode {
         if color == "red" {
             self.fillColor = SKColor.red
         }
-        
+        let clickableDot = SKSpriteNode(color: UIColor.clear, size: CGSize(width: 80, height: 80))
+        clickableDot.zPosition = self.zPosition - 1
+        self.addChild(clickableDot)
     }
     
     func grow() {

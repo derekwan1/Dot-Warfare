@@ -5,6 +5,10 @@
 //  Created by Derek Wan on 1/11/19.
 //  Copyright © 2019 Derek Wan. All rights reserved.
 //
+//TODO: Need to make bomb disappear after it blows up.
+//      Need to find criteria for making bomb appear
+//      Need to add magnet bomb (attract all dots to one area so you can tap quickly)
+//      Need to add electrocutor (electrocutes every dot in a lane)
 
 import SpriteKit
 

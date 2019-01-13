@@ -16,6 +16,7 @@
 		210F98C321E8C39F002E72E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 210F98C121E8C39F002E72E0 /* LaunchScreen.storyboard */; };
 		210F98CB21E8C3F8002E72E0 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210F98CA21E8C3F8002E72E0 /* GameManager.swift */; };
 		2135200821EB372100C6F299 /* redBomb.png in Resources */ = {isa = PBXBuildFile; fileRef = 2135200721EB372100C6F299 /* redBomb.png */; };
+		2135200C21EB436800C6F299 /* Bomb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2135200B21EB436800C6F299 /* Bomb.swift */; };
 		217BD6EB21E96A67001E15C2 /* Dot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217BD6EA21E96A67001E15C2 /* Dot.swift */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +32,7 @@
 		210F98C421E8C39F002E72E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		210F98CA21E8C3F8002E72E0 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		2135200721EB372100C6F299 /* redBomb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = redBomb.png; path = Assets.xcassets/Images/redBomb.png; sourceTree = "<group>"; };
+		2135200B21EB436800C6F299 /* Bomb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bomb.swift; sourceTree = "<group>"; };
 		217BD6EA21E96A67001E15C2 /* Dot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dot.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -75,6 +77,7 @@
 				210F98C421E8C39F002E72E0 /* Info.plist */,
 				210F98CA21E8C3F8002E72E0 /* GameManager.swift */,
 				217BD6EA21E96A67001E15C2 /* Dot.swift */,
+				2135200B21EB436800C6F299 /* Bomb.swift */,
 			);
 			path = "Dot Warfare";
 			sourceTree = "<group>";
@@ -157,6 +160,7 @@
 				210F98BB21E8C39B002E72E0 /* GameViewController.swift in Sources */,
 				217BD6EB21E96A67001E15C2 /* Dot.swift in Sources */,
 				210F98B321E8C39B002E72E0 /* AppDelegate.swift in Sources */,
+				2135200C21EB436800C6F299 /* Bomb.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

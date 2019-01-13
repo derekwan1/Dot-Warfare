@@ -5,6 +5,7 @@
 //  Created by Derek Wan on 1/11/19.
 //  Copyright © 2019 Derek Wan. All rights reserved.
 //
+//TODO: Need to convert all dots to sprites to optimize.
 
 import SpriteKit
 import GameplayKit
@@ -29,7 +30,6 @@ class GameScene: SKScene {
     var playerPositions: [(Int, Int)] = []
     var gameBG: SKShapeNode!
     var pauseBG: SKShapeNode!
-    var bomb: SKSpriteNode!
     
     var scorePos: CGPoint?
     var is_paused: Bool!
@@ -42,13 +42,8 @@ class GameScene: SKScene {
     }
     
     private func initializeGameView() {
-        //Make the bomb its own separate object
-        let image = UIImage(named: "redBomb")
-        let texture = SKTexture(image: image!)
-        bomb = SKSpriteNode(texture: texture)
-        bomb.zPosition = 200000
-        self.addChild(bomb)
-        bomb.run(SKAction.repeatForever(SKAction.rotate(byAngle: 2 * .pi, duration: 4)))
+        let bomb = Bomb(scene: self)
+        bomb.position = CGPoint(x: 0, y: 0)
         
         currentScore = SKLabelNode(fontNamed: "ArialRoundedMTBold")
         currentScore.zPosition = 1
@@ -223,6 +218,12 @@ class GameScene: SKScene {
                     pauseBG.run(SKAction.move(to: CGPoint(x: 0, y: frame.size.height), duration: 0.3)) {
                         self.pauseBG.isHidden = true
                     }
+                }
+                
+                if node.name == "bomb" {
+                    let bomb = node as? Bomb
+                    bomb?.removeAllActions()
+                    bomb!.explode(scene: self)
                 }
 
                 if node.name == "red" && !is_paused {
