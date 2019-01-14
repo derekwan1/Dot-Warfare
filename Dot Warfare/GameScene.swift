@@ -42,9 +42,6 @@ class GameScene: SKScene {
     }
     
     private func initializeGameView() {
-        let bomb = Bomb(scene: self)
-        bomb.position = CGPoint(x: 0, y: 0)
-        
         currentScore = SKLabelNode(fontNamed: "ArialRoundedMTBold")
         currentScore.zPosition = 1
         currentScore.position = CGPoint(x: 0, y: (frame.size.height / -2) + 60)
@@ -110,7 +107,7 @@ class GameScene: SKScene {
         //Create left pause line
         pauseButtonA = SKShapeNode()
         pauseButtonA.name = "left_pause_button"
-        pauseButtonA.zPosition = 1
+        pauseButtonA.zPosition = 999999999999
         pauseButtonA.position = CGPoint(x: 0, y: (frame.size.height / -2) + 200)
         pauseButtonA.fillColor = SKColor.black
         let topRight = CGPoint(x: (frame.size.width / -2) + 96, y: frame.size.height - 230)
@@ -126,7 +123,7 @@ class GameScene: SKScene {
         //Create right pause line
         pauseButtonB = SKShapeNode()
         pauseButtonB.name = "right_pause_button"
-        pauseButtonB.zPosition = 1
+        pauseButtonB.zPosition = 999999999999
         pauseButtonB.position = CGPoint(x: 0, y: (frame.size.height / -2) + 200)
         pauseButtonB.fillColor = SKColor.black
         let topRight2 = CGPoint(x: (frame.size.width / -2) + 126, y: frame.size.height - 230)
@@ -159,7 +156,7 @@ class GameScene: SKScene {
         pauseBtn = SKShapeNode(rect: rect, cornerRadius: 10)
         pauseBtn.fillColor = SKColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         pauseBtn.position = CGPoint(x: (frame.size.width / -2) + 72.5, y: (frame.size.height / 2) - 90)
-        pauseBtn.zPosition = 6
+        pauseBtn.zPosition = 999999999999
         pauseBtn.name = "pause_button"
         pauseBtn.isHidden = true
         self.addChild(pauseBtn)
@@ -221,9 +218,10 @@ class GameScene: SKScene {
                 }
                 
                 if node.name == "bomb" {
-                    let bomb = node as? Bomb
+                    //bomb labels are given to the touchable clear nodes
+                    let bomb = node.parent as? Bomb
                     bomb?.removeAllActions()
-                    bomb!.explode(scene: self)
+                    bomb?.explode(scene: self)
                 }
 
                 if node.name == "red" && !is_paused {
