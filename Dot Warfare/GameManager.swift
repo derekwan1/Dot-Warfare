@@ -22,7 +22,9 @@ class GameManager {
     var gameStarted = false
     var numDots = 0
     var boom = 1
+    var currScore = 0
     var bomb: Bomb!
+    var bombExists = false
     
     init(scene: GameScene) {
         self.scene = scene
@@ -86,29 +88,28 @@ class GameManager {
             if time >= nextTime! && gameStarted {
                 nextTime = time + timeExtension
                 if !scene.is_paused {
-                    generateDot()
-                    if boom == 0 && !bomb.exploding{
-                        moveBomb()
+                    if boom == 1 {
+                        generateBomb()
+                        boom = 0
+                    } else if !(bombExists && bomb.exploding) {
+                        generateDot()
                     }
                 }
-            }
-            if boom == 1 {
-                boom = 0
-                generateBomb()
             }
         }
     }
     
     func generateBomb() {
         bomb = Bomb(scene: scene)
+        bombExists = true
         bomb.isHidden = false
-        bomb.position = CGPoint(x: 0, y: 0)
         var randomX = Int(arc4random_uniform(UInt32((scene.frame.width / 2) - 200)))
         let left_or_right = arc4random_uniform(2)
         if left_or_right == 0 {
             randomX = -1 * randomX
         }
-        bomb.position = CGPoint(x: CGFloat(randomX), y: -(scene.frame.size.height / 2) + 55)
+        bomb.position = CGPoint(x: CGFloat(randomX), y: -(scene.frame.size.height / 2) + 80)
+        bomb.moveUp()
     }
     
     func moveBomb() {

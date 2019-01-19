@@ -11,8 +11,10 @@ import SpriteKit
 class Bomb: SKSpriteNode {
     
     var exploding = false
+    var gameScene: GameScene!
     
     init(scene: GameScene) {
+        self.gameScene = scene
         let image = UIImage(named: "redBomb")
         let texture = SKTexture(image: image!)
         super.init(texture: texture, color: UIColor.clear, size: texture.size())
@@ -62,8 +64,13 @@ class Bomb: SKSpriteNode {
                 whiteMask.run(SKAction.scale(to: 30, duration: 1)) {
                     for dot in scene.game.dotArray {
                         dot.removeFromParent()
+                        (self.gameScene.game as GameManager).currScore += 1
                     }
+                    let score = (self.gameScene.game as GameManager).currScore
+                    self.gameScene.currentScore.text = "Score: " + String(score)
+                    scene.game.dotArray.removeAll()
                     whiteMask.removeFromParent()
+                    (self.gameScene.game as GameManager).bombExists = false
                 }
                 self.run(SKAction.scale(to: 0, duration: 0.3)) {
                     //Hacky way to make sure the bomb disappears after its effect
@@ -73,6 +80,12 @@ class Bomb: SKSpriteNode {
                 }
                 
             }
+        }
+    }
+    
+    func moveUp() {
+        self.run(SKAction.move(to: CGPoint(x: self.position.x, y: self.gameScene.frame.size.height), duration: 25)) {
+            self.removeFromParent()
         }
     }
 }

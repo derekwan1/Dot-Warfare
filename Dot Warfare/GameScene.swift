@@ -43,12 +43,12 @@ class GameScene: SKScene {
     
     private func initializeGameView() {
         currentScore = SKLabelNode(fontNamed: "ArialRoundedMTBold")
-        currentScore.zPosition = 1
-        currentScore.position = CGPoint(x: 0, y: (frame.size.height / -2) + 60)
+        currentScore.zPosition = 3005
+        currentScore.position = CGPoint(x: -(frame.size.width / 2) + 100, y: (frame.size.height / -2) + 20)
         currentScore.fontSize = 40
         currentScore.isHidden = true
         currentScore.text = "Score: 0"
-        currentScore.fontColor = SKColor.white
+        currentScore.fontColor = SKColor.black
         self.addChild(currentScore)
         
         let width = frame.size.width
@@ -57,7 +57,7 @@ class GameScene: SKScene {
         gameBG = SKShapeNode(rect: rect, cornerRadius: 0.02)
         gameBG.fillColor = SKColor.white
         gameBG.zPosition = 0
-        gameBG.isHidden = true
+        gameBG.isHidden = false
         self.addChild(gameBG)
         
         paused_status = SKLabelNode(fontNamed: "ArialRoundedMTBold")
@@ -84,11 +84,11 @@ class GameScene: SKScene {
         self.addChild(gameLogo)
         //Create best score label
         bestScore = SKLabelNode(fontNamed: "ArialRoundedMTBold")
-        bestScore.zPosition = 1
+        bestScore.zPosition = 3005
         bestScore.position = CGPoint(x: 0, y: gameLogo.position.y - 50)
         bestScore.fontSize = 40
         bestScore.text = "Best Score: \(UserDefaults.standard.integer(forKey: "bestScore"))"
-        bestScore.fontColor = SKColor.white
+        bestScore.fontColor = SKColor.black
         self.addChild(bestScore)
         //Create play button
         playButton = SKShapeNode()
@@ -227,6 +227,8 @@ class GameScene: SKScene {
                 if node.name == "red" && !is_paused {
                     let dot = node as? Dot
                     dot!.die(color: "red")
+                    game.currScore += 1
+                    currentScore.text = "Score: " + String(game.currScore)
                 }
             }
         }
@@ -256,16 +258,12 @@ class GameScene: SKScene {
             self.pauseBtn.isHidden = false
         }
         
-        let bottomCorner = CGPoint(x: 0, y: (frame.size.height / -2) + 20)
+        let bottomCorner = CGPoint(x: (frame.size.width / 2) - 150, y: (frame.size.height / -2) + 20)
         bestScore.run(SKAction.move(to: bottomCorner, duration: 0.4)) {
-            self.gameBG.setScale(0)
             self.currentScore.setScale(0)
-            self.gameBG.isHidden = false
-//            self.currentScore.isHidden = false
-            self.bestScore.isHidden = true
-            self.gameBG.run(SKAction.scale(to: 1, duration: 0.4))
+            self.bestScore.isHidden = false
+            self.currentScore.isHidden = false
             self.currentScore.run(SKAction.scale(to: 1, duration: 0.4))
-            
             self.game.initGame()
         }
     }
