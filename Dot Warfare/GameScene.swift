@@ -229,6 +229,7 @@ class GameScene: SKScene {
                     dot!.die(color: "red")
                     game.currScore += 1
                     currentScore.text = "Score: " + String(game.currScore)
+                    game.updateScore()
                 }
             }
         }

@@ -31,19 +31,19 @@ class Dot: SKShapeNode {
     }
     
     func grow() {
-        self.run(SKAction.scale(to: 0.35, duration: 0.2)) {
-            self.run(SKAction.scale(to: 0.6, duration: 0.2)) {
-                self.run(SKAction.scale(to: 0.8, duration: 0.25)) {
-                    self.run(SKAction.scale(to: 1, duration: 0.4))
-                }
-            }
-        }
+        self.run(SKAction.scale(to: 1, duration: 1))
     }
     
     func moveUp() {
-        self.run(SKAction.move(to: CGPoint(x: self.x, y: self.gameScene.frame.size.height), duration: 25)) {
-            self.removeFromParent()
+        var randomX = Int(arc4random_uniform(UInt32((self.gameScene.frame.width / 2) - 75)))
+        let left_or_right = arc4random_uniform(2)
+        if left_or_right == 0 {
+            randomX = -1 * randomX
         }
+        let randomY = Int(arc4random_uniform(UInt32(150)))
+        let currY = Int(self.position.y)
+        let moveUp = SKAction.move(to: CGPoint(x: randomX, y: currY + randomY), duration: 0.75)
+        self.run(moveUp)
     }
     
     func die(color: String) {

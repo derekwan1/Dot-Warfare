@@ -68,6 +68,7 @@ class Bomb: SKSpriteNode {
                     }
                     let score = (self.gameScene.game as GameManager).currScore
                     self.gameScene.currentScore.text = "Score: " + String(score)
+                    (self.gameScene.game as GameManager).updateScore()
                     scene.game.dotArray.removeAll()
                     whiteMask.removeFromParent()
                     (self.gameScene.game as GameManager).bombExists = false
@@ -84,8 +85,17 @@ class Bomb: SKSpriteNode {
     }
     
     func moveUp() {
-        self.run(SKAction.move(to: CGPoint(x: self.position.x, y: self.gameScene.frame.size.height), duration: 25)) {
-            self.removeFromParent()
+        var randomX = Int(arc4random_uniform(UInt32((self.gameScene.frame.width / 2) - 100)))
+        let left_or_right = arc4random_uniform(2)
+        if left_or_right == 0 {
+            randomX = -1 * randomX
         }
+        let yDest = Int(self.position.y + 99)
+        let moveUp = SKAction.move(to: CGPoint(x: randomX, y: yDest), duration: 0.75)
+        self.run(moveUp)
+    }
+    
+    func grow() {
+        self.run(SKAction.scale(to: 1, duration: 1))
     }
 }

@@ -34,6 +34,32 @@ class GameManager {
         gameStarted = true
     }
     
+    func update(time: Double) {
+        if nextTime == nil {
+            nextTime = time + timeExtension
+        } else {
+            if time >= nextTime! && gameStarted {
+                nextTime = time + timeExtension
+                if !scene.is_paused {
+                    if boom == 1 {
+                        generateBomb()
+                        boom = 0
+                    } else if !(bombExists && bomb.exploding) {
+                        generateDot()
+                    }
+                    for dot in dotArray {
+                        if !dot.dying {
+                            dot.moveUp()
+                        }
+                    }
+                    if bombExists && !bomb.exploding {
+                        bomb.moveUp()
+                    }
+                }
+            }
+        }
+    }
+    
     func generateDot() {
         //This makes sure we don't hit the zPosition limit
         if numDots == 1000 {
@@ -76,27 +102,8 @@ class GameManager {
         scene.addChild(dot)
         dot.isHidden = false
         dot.grow()
-        dot.moveUp()
         dotArray.append(dot)
         previousLane = laneNumber
-    }
-    
-    func update(time: Double) {
-        if nextTime == nil {
-            nextTime = time + timeExtension
-        } else {
-            if time >= nextTime! && gameStarted {
-                nextTime = time + timeExtension
-                if !scene.is_paused {
-                    if boom == 1 {
-                        generateBomb()
-                        boom = 0
-                    } else if !(bombExists && bomb.exploding) {
-                        generateDot()
-                    }
-                }
-            }
-        }
     }
     
     func generateBomb() {
@@ -109,7 +116,8 @@ class GameManager {
             randomX = -1 * randomX
         }
         bomb.position = CGPoint(x: CGFloat(randomX), y: -(scene.frame.size.height / 2) + 80)
-        bomb.moveUp()
+        bomb.setScale(0)
+        bomb.grow()
     }
     
     func moveBomb() {
@@ -122,15 +130,10 @@ class GameManager {
         bomb.run(SKAction.move(to: new_pos, duration: 2))
     }
     
-    //Code from SNAKE below this comment
-    //______________________________________________________________________
-    
-    private func updateScore() {
-        if currentScore > UserDefaults.standard.integer(forKey: "bestScore") {
-            UserDefaults.standard.set(currentScore, forKey: "bestScore")
+    func updateScore() {
+        if currScore > UserDefaults.standard.integer(forKey: "bestScore") {
+            UserDefaults.standard.set(currScore, forKey: "bestScore")
         }
-        currentScore = 0
-        scene.currentScore.text = "Score: 0"
         scene.bestScore.text = "Best Score: \(UserDefaults.standard.integer(forKey: "bestScore"))"
     }
 }
