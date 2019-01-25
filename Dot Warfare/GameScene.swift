@@ -5,7 +5,7 @@
 //  Created by Derek Wan on 1/11/19.
 //  Copyright © 2019 Derek Wan. All rights reserved.
 //
-//TODO: Need to convert all dots to sprites to optimize.
+//TODO: Need to convert all dots to sprites to optimize. 
 
 import SpriteKit
 import GameplayKit
